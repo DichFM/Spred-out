@@ -1,15 +1,25 @@
-
 using System;
 using TMPro;
+using TouchScript.Gestures;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class UI : MonoBehaviour
 {
     public static UI Instance;
-    
+
     [SerializeField] private TextMeshProUGUI _firstPlayerScoreText;
     [SerializeField] private TextMeshProUGUI _secondPlayerScoreText;
     [SerializeField] private TextMeshProUGUI _gameTimerText;
+    [SerializeField] private GameObject _scorePopup;
+    [SerializeField] private GameObject _uiParent;
+    [SerializeField] private TapGesture _menuButton;
+    [SerializeField] private TapGesture _restartButton;
+    [SerializeField] private GameObject _endGameUI;
+    [SerializeField] private TextMeshProUGUI _winnerText;
+    [SerializeField] private GameObject _endGameButtons;
+
 
     private void Awake()
     {
@@ -17,10 +27,73 @@ public class UI : MonoBehaviour
             Instance = this;
     }
 
+    private void OnEnable()
+    {
+        _menuButton.Tapped += LoadMenu;
+        _restartButton.Tapped += RestarGame;
+    }
+
+    private void RestarGame(object sender, EventArgs e)
+    {
+        GameManager.Instance.RestartGame();
+    }
+
+    private void OnDisable()
+    {
+        _menuButton.Tapped -= LoadMenu;
+        _restartButton.Tapped -= RestarGame;
+    }
+
+    private void LoadMenu(object sender, EventArgs e)
+    {
+        SceneManager.LoadScene(0);
+    }
+
     public void UIUpdate()
     {
         _firstPlayerScoreText.text = GameManager.Instance.Player1.Score.ToString();
         _secondPlayerScoreText.text = GameManager.Instance.Player2.Score.ToString();
-        _gameTimerText.text =GameManager.Instance.GameTimer.ToString("00");
+        _gameTimerText.text = GameManager.Instance.GameTimer.ToString("00");
+    }
+
+    public void CreateScorePopup(Transform transform)
+    {
+        Instantiate(_scorePopup, transform.position, Quaternion.identity, _uiParent.transform);
+    }
+
+    public void ShowEndGameUI(GameMode gameMode, int winner)
+    {
+        Invoke(nameof(ShowEndGameButtons), 3f);
+        _endGameUI.SetActive(true);
+        if (gameMode == GameMode.Multiplyaer)
+        {
+            switch (winner)
+            {
+                case 1:
+                    _winnerText.text = "PLAYER 1 WON";
+                    break;
+                case 2:
+                    _winnerText.text = "PLAYER 2 WON";
+                    break;
+                case 3:
+                    _winnerText.text = "DRAW";
+                    break;
+            }
+        }
+        else
+        {
+            _winnerText.text = $"YOUR SCORE: {GameManager.Instance.Player1.Score}";
+        }
+    }
+
+    public void ShowEndGameButtons()
+    {
+        _endGameButtons.SetActive(true);
+    }
+
+    public void HideEndGameUI()
+    {
+        _endGameButtons.SetActive(false);
+        _endGameUI.SetActive(false);
     }
 }

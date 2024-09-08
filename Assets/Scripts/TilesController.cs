@@ -16,6 +16,7 @@ public class TilesController : MonoBehaviour
     [SerializeField] private Tile[] _allTiles;
     [SerializeField] private List<Tile> _freeTilesPlayer1 = new List<Tile>();
     [SerializeField] private List<Tile> _freeTilesPlayer2 = new List<Tile>();
+   
     private int _maxCorrectClicks = 3;
 
     private void Awake()
@@ -24,7 +25,6 @@ public class TilesController : MonoBehaviour
         {
             Instance = this;
         }
-        
     }
 
 
@@ -98,6 +98,15 @@ public class TilesController : MonoBehaviour
         }
     }
 
+    public void HideAllTiles()
+    {
+        _sampleTile.Hide();
+        for (int i = 0; i < _allTiles.Length; i++)
+        {
+            _allTiles[i].Hide();
+        }
+    }
+
     public void GenerateCorretTilesPlayer1(int amount)
     {
         UpdateFreeTilesList();
@@ -108,7 +117,7 @@ public class TilesController : MonoBehaviour
             newCorrectTile.SetColor(GameManager.Instance.RandomColor);
         }
     }
-    
+
     public void GenerateCorretTilesPlayer2(int amount)
     {
         UpdateFreeTilesList();
@@ -119,7 +128,6 @@ public class TilesController : MonoBehaviour
             newCorrectTile.SetColor(GameManager.Instance.RandomColor);
         }
     }
-
 
 
     private Tile GetRandomTile(List<Tile> tileList)

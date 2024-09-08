@@ -33,6 +33,10 @@ public class Tile : MonoBehaviour
     [SerializeField] private GameObject _visual;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private GameObject _hitFX;
+    [SerializeField] private bool _isShowing;
+    [SerializeField] private bool _isHiding;
+    [SerializeField] private bool _isActive;
+
 
     public Owner Owner
     {
@@ -45,10 +49,6 @@ public class Tile : MonoBehaviour
         get => _role;
         set => _role = value;
     }
-
-    private bool _isShowing;
-    private bool _isHiding;
-    private bool _isActive;
 
 
     private void Awake()
@@ -69,8 +69,14 @@ public class Tile : MonoBehaviour
 
     private void Update()
     {
-        ShowTileAnimation();
-        HideTileAnimation();
+        if (_isHiding)
+        {
+            HideTileAnimation();
+        }
+        else if (_isShowing)
+        {
+            ShowTileAnimation();
+        }
     }
 
     private void Tapped(object sender, EventArgs e)
@@ -83,22 +89,22 @@ public class Tile : MonoBehaviour
 
 
         if (_role == Role.Correct)
+        {
             Instantiate(_hitFX, transform.position, quaternion.identity);
+            UI.Instance.CreateScorePopup(transform);
             GameManager.Instance.TapOnCorrectTile(this);
+        }
     }
 
     private void HideTileAnimation()
     {
-        if (_isHiding & !_isShowing)
-        {
-            transform.localScale = Vector3.MoveTowards(
-                transform.localScale,
-                Vector3.zero,
-                Time.deltaTime * _hidingSpeed
-            );
-        }
+        transform.localScale = Vector3.MoveTowards(
+            transform.localScale,
+            Vector3.zero,
+            Time.deltaTime * _hidingSpeed
+        );
 
-        if (transform.localScale.x <= 0.1f)
+        if (transform.localScale.x <= 0.02f)
         {
             _visual.SetActive(false);
             _isHiding = false;
@@ -107,12 +113,10 @@ public class Tile : MonoBehaviour
 
     public void ShowTileAnimation()
     {
-        if (_isShowing & !_isHiding)
-        {
-            _visual.SetActive(true);
-            transform.localScale =
-                Vector3.MoveTowards(transform.localScale, Vector3.one, Time.deltaTime * _showingSpeed);
-        }
+        _visual.SetActive(true);
+        transform.localScale =
+            Vector3.MoveTowards(transform.localScale, Vector3.one, Time.deltaTime * _showingSpeed);
+
 
         if (transform.localScale == Vector3.one)
         {

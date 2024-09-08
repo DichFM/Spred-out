@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
     public float GameTimer;
     public Color RandomColor;
     public GameMode GameMode;
-    public int FirstPlayerScore;
-    public int SecondPlayerScore;
     private int _maxCorrectTilesSingleplayer = 9;
     private int _maxCorrectTilesMultiplayer = 6;
     private bool _isStarting;
@@ -26,9 +24,13 @@ public class GameManager : MonoBehaviour
     public Player Player2;
     [SerializeField] private AudioSource _correctSound;
     [SerializeField] private AudioSource _wrongSound;
+    [SerializeField] private AudioSource _gameMusic;
+    [SerializeField] private AudioSource _menuMusic;
+    [SerializeField] private AudioSource _timerSound;
+    [SerializeField] private GameObject _tilesGO;
 
-    private float _roundTime = 20;
-
+    private float _roundTime = 30;
+    private bool _timerFlag;
 
     private void Awake()
     {
@@ -48,27 +50,35 @@ public class GameManager : MonoBehaviour
         {
             GameMode = GameMode.Singleplayer;
         }
-        
-        
+
 
         StartCoroutine(StartGameDelay());
     }
 
     public IEnumerator StartGameDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        StartGame(GameMode);
+    }
+
+    public void RestartGame()
+    {
         StartGame(GameMode);
     }
 
     public void StartGame(GameMode gameMode)
     {
+        _tilesGO.SetActive(true);
         ScoreReset();
         TimeReset();
+        _gameMusic.Play();
+        _menuMusic.Stop();
+        UI.Instance.HideEndGameUI();
         UI.Instance.UIUpdate();
         GameTimer = _roundTime;
         _isStarting = true;
 
-       
+
         TilesController.Instance.SetTileRole();
         TilesController.Instance.ShowAllTiles();
         TilesController.Instance.ShowSampleTile();
@@ -97,6 +107,12 @@ public class GameManager : MonoBehaviour
             GameTimer -= Time.deltaTime;
             UI.Instance.UIUpdate();
 
+            if (GameTimer <= 5 & _timerFlag == false)
+            {
+                _timerSound.Play();
+                _timerFlag = true;
+            }
+            
             if (GameTimer <= 0)
             {
                 StopGame();
@@ -104,6 +120,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
     private void TimeReset()
     {
         GameTimer = 0f;
@@ -111,14 +128,36 @@ public class GameManager : MonoBehaviour
 
     private void ScoreReset()
     {
-        FirstPlayerScore = 0;
-        SecondPlayerScore = 0;
+        Player1.ScoreReset();
+        Player2.ScoreReset();
     }
 
     public void StopGame()
     {
+        _tilesGO.SetActive(false);
+        _gameMusic.Stop();
+        _menuMusic.Play();
+        _timerFlag = false;
+        _timerSound.Stop();
         _isStarting = false;
         TilesController.Instance.DiactivateAllTiles();
+        TilesController.Instance.HideAllTiles();
+        int winner;
+
+        if (Player1.Score > Player2.Score)
+        {
+            winner = 1;
+        }
+        else if (Player2.Score > Player1.Score)
+        {
+            winner = 2;
+        }
+        else
+        {
+            winner = 3;
+        }
+
+        UI.Instance.ShowEndGameUI(GameMode, winner);
     }
 
 
@@ -128,7 +167,6 @@ public class GameManager : MonoBehaviour
             return;
 
 
-            
         if (tile.Owner == Owner.Player1)
         {
             Player1.Score++;
@@ -142,9 +180,11 @@ public class GameManager : MonoBehaviour
         }
 
         _correctSound.Play();
+        
+        tile.Hide();
         tile.SetRole(Role.Free, tile.Owner);
-        Debug.Log(tile.Owner);
         tile.SetColor(ColorManager.Instance.DefaultColor);
+       
 
 
         if (Player1.CorrectСlicks >= 3)
@@ -158,6 +198,7 @@ public class GameManager : MonoBehaviour
             Player2.CorrectСlicks = 0;
             TilesController.Instance.GenerateCorretTilesPlayer2(3);
         }
+        tile.Show();
     }
 
     public void PlayWrongSound()

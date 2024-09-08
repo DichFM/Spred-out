@@ -91,6 +91,7 @@ MonoBehaviour:
   _visual: {fileID: 8417815814931375270}
   _spriteRenderer: {fileID: 7473734372950131413}
   _hitFX: {fileID: 6675302182551818641, guid: 5bc9a0bf98f67d240a936bf476ba2082, type: 3}
+  _scorePopup: {fileID: 8955422011163532847, guid: e1f9231fa7429cd4b88d8ba2978ef52e, type: 3}
 --- !u!1 &6073595749100816450
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +337,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 13
   m_Sprite: {fileID: 2747690628134850419, guid: 16037dbd798344f57a526d53d48f5ead, type: 3}
-  m_Color: {r: 1, g: 0.084176645, b: 0.042452812, a: 0.69411767}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.69411767}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
