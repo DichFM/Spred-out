@@ -19,6 +19,8 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject _endGameUI;
     [SerializeField] private TextMeshProUGUI _winnerText;
     [SerializeField] private GameObject _endGameButtons;
+    [SerializeField] private GameObject _helpScreen;
+    [SerializeField] private GameObject[] _headUI;
 
 
     private void Awake()
@@ -30,18 +32,34 @@ public class UI : MonoBehaviour
     private void OnEnable()
     {
         _menuButton.Tapped += LoadMenu;
-        _restartButton.Tapped += RestarGame;
+        _restartButton.Tapped += RestartGame;
     }
 
-    private void RestarGame(object sender, EventArgs e)
+    private void RestartGame(object sender, EventArgs e)
     {
         GameManager.Instance.RestartGame();
+    }
+
+    public void ShowHeadUI()
+    {
+        for (int i = 0; i < _headUI.Length; i++)
+        {
+            _headUI[i].SetActive(true);
+        }
+    }
+
+    public void HideHeadUI()
+    {
+        for (int i = 0; i < _headUI.Length; i++)
+        {
+            _headUI[i].SetActive(false);
+        }
     }
 
     private void OnDisable()
     {
         _menuButton.Tapped -= LoadMenu;
-        _restartButton.Tapped -= RestarGame;
+        _restartButton.Tapped -= RestartGame;
     }
 
     private void LoadMenu(object sender, EventArgs e)
@@ -56,16 +74,27 @@ public class UI : MonoBehaviour
         _gameTimerText.text = GameManager.Instance.GameTimer.ToString("00");
     }
 
-    public void CreateScorePopup(Transform transform)
+    public void CreateScorePopup(Transform transform, int value)
     {
-        Instantiate(_scorePopup, transform.position, Quaternion.identity, _uiParent.transform);
+        var newPopup = Instantiate(_scorePopup, transform.position, Quaternion.identity, _uiParent.transform);
+        newPopup.GetComponent<Popup>().SetValue(value);
+    }
+
+    public void ShowHelpText()
+    {
+        _helpScreen.SetActive(true);
+    }
+
+    public void HideHelpText()
+    {
+        _helpScreen.SetActive(false);
     }
 
     public void ShowEndGameUI(GameMode gameMode, int winner)
     {
         Invoke(nameof(ShowEndGameButtons), 3f);
         _endGameUI.SetActive(true);
-        if (gameMode == GameMode.Multiplyaer)
+        if (gameMode == GameMode.Multiplyaer | gameMode == GameMode.Domination)
         {
             switch (winner)
             {

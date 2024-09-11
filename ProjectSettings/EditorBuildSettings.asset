@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SingleplayerMode.unity
     guid: 16498e22724a02c4c81da3cf85acd031
+  - enabled: 1
+    path: Assets/Scenes/DominationMode.unity
+    guid: b46a9fd49051cd54ebd6932a98829bf2
   m_configObjects: {}

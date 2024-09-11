@@ -49,7 +49,7 @@ MonoBehaviour:
   OnStateChange:
     m_PersistentCalls:
       m_Calls: []
-  basicEditor: 1
+  basicEditor: 0
   generalProps: 0
   limitsProps: 0
   advancedProps: 0
@@ -83,15 +83,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tapGesture: {fileID: 0}
-  _hidingSpeed: 5
-  _showingSpeed: 5
+  _hidingSpeed: 10
+  _showingSpeed: 10
   _destroyDelay: 0.5
   _role: 0
   _owner: 0
   _visual: {fileID: 8417815814931375270}
   _spriteRenderer: {fileID: 7473734372950131413}
   _hitFX: {fileID: 6675302182551818641, guid: 5bc9a0bf98f67d240a936bf476ba2082, type: 3}
-  _scorePopup: {fileID: 8955422011163532847, guid: e1f9231fa7429cd4b88d8ba2978ef52e, type: 3}
+  _isShowing: 0
+  _isHiding: 0
+  _isActive: 0
+  _neighborTiles: []
 --- !u!1 &6073595749100816450
 GameObject:
   m_ObjectHideFlags: 0

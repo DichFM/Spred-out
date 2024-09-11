@@ -5,13 +5,14 @@ using TouchScript.Gestures;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 
 public enum Role
 {
     Free,
     Correct,
-    Disabled
+    Disabled,
 }
 
 public enum Owner
@@ -30,12 +31,15 @@ public class Tile : MonoBehaviour
     [SerializeField] private float _destroyDelay;
     [SerializeField] private Role _role = Role.Free;
     [SerializeField] private Owner _owner;
+    [SerializeField] private bool _isLocked;
     [SerializeField] private GameObject _visual;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private GameObject _hitFX;
     [SerializeField] private bool _isShowing;
     [SerializeField] private bool _isHiding;
     [SerializeField] private bool _isActive;
+    [SerializeField] private Tile[] _neighborTiles;
+    private float _timeFromLastTap;
 
 
     public Owner Owner
@@ -91,7 +95,13 @@ public class Tile : MonoBehaviour
         if (_role == Role.Correct)
         {
             Instantiate(_hitFX, transform.position, quaternion.identity);
-            UI.Instance.CreateScorePopup(transform);
+            int scoretoPopup = 1;
+            if (GameManager.Instance.GameMode == GameMode.Domination)
+            {
+                scoretoPopup = GetFreeNeighborsNumber();
+            }
+
+            UI.Instance.CreateScorePopup(transform, scoretoPopup);
             GameManager.Instance.TapOnCorrectTile(this);
         }
     }
@@ -144,5 +154,48 @@ public class Tile : MonoBehaviour
     {
         _role = role;
         _owner = owner;
+    }
+
+
+    public void CapturingNeighbors()
+    {
+        for (int i = 0; i < _neighborTiles.Length; i++)
+        {
+            var neighborTile = _neighborTiles[i];
+
+            if (neighborTile.Owner != this.Owner)
+            {
+                neighborTile.Hide();
+                neighborTile.Show();
+                neighborTile.SetRole(Role.Correct, this.Owner);
+                neighborTile.SetColor(_spriteRenderer.color);
+            }
+        }
+    }
+
+
+    public int GetFreeNeighborsNumber()
+    {
+        int value = 0;
+        for (int i = 0; i < _neighborTiles.Length; i++)
+        {
+            if (_neighborTiles[i].Owner != this.Owner)
+            {
+                value++;
+            }
+        }
+
+        return value;
+    }
+
+
+    public void Lock()
+    {
+        _isLocked = true;
+    }
+
+    public void Unlock()
+    {
+        _isLocked = false;
     }
 }

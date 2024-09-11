@@ -10,6 +10,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private TapGesture _singleMode;
     [SerializeField] private TapGesture _multiplayerMode;
     [SerializeField] private AudioSource _fxSound;
+    
 
 
     private void OnEnable()
