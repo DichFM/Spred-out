@@ -46,4 +46,4 @@ MonoBehaviour:
     - id: 4
       title: 60 sec
       value: 60
-    selected: 03000000
+    selected: 00000000

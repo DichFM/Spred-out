@@ -6324,7 +6324,7 @@ MonoBehaviour:
       - id: 4
         title: 60 sec
         value: 60
-      selected: 03000000
+      selected: 00000000
 --- !u!4 &1493461976
 Transform:
   m_ObjectHideFlags: 0
@@ -6373,7 +6373,7 @@ MonoBehaviour:
   - {r: 1, g: 0.46519178, b: 0, a: 1}
   - {r: 1, g: 0, b: 0.73324823, a: 1}
   - {r: 0.053194046, g: 0, b: 1, a: 1}
-  - {r: 0, g: 0.95602536, b: 1, a: 1}
+  - {r: 0, g: 0.7696705, b: 1, a: 1}
   - {r: 0.057249308, g: 1, b: 0, a: 1}
   DefaultColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!4 &1524005315
