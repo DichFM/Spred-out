@@ -182,6 +182,12 @@ public class GameManager : MonoBehaviour
 
             if (GameMode == GameMode.Сapture)
             {
+                if (TilesManager.Instance.CheckAllTiles())
+                {
+                    StopGame();
+                    return;
+                }
+                    
                 if (_timeFromLastTap > 3f)
                 {
                     _timeFromLastTap = 0;

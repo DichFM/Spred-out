@@ -21,8 +21,7 @@ public class TilesManager : MonoBehaviour
     [SerializeField] private List<Tile> _occupiedTilesPlayer1 = new List<Tile>();
     [SerializeField] private List<Tile> _occupiedTilesPlayer2 = new List<Tile>();
     private int _maxCorrectClicks = 3;
-    
-    
+
 
     private void Awake()
     {
@@ -32,7 +31,6 @@ public class TilesManager : MonoBehaviour
         }
     }
 
-    
 
     public void SetTileRole()
     {
@@ -82,7 +80,7 @@ public class TilesManager : MonoBehaviour
     public int GetOccupiedTilesNumber(Owner owner)
     {
         int number = 0;
-        
+
         for (int i = 0; i < _allTiles.Length; i++)
         {
             if (_allTiles[i].Owner == owner)
@@ -118,8 +116,7 @@ public class TilesManager : MonoBehaviour
             randomTile.Show();
         }
     }
-    
-    
+
 
     private void UpdateOccupiedTiles()
     {
@@ -136,6 +133,28 @@ public class TilesManager : MonoBehaviour
             {
                 _occupiedTilesPlayer2.Add(_allTiles[i]);
             }
+        }
+    }
+
+    public bool CheckAllTiles()
+    {
+        int tiles1 = 0;
+        int tiles2 = 0;
+        for (int i = 0; i < _allTiles.Length; i++)
+        {
+            if (_allTiles[i].Owner == Owner.Player1)
+                tiles1++;
+            if (_allTiles[i].Owner == Owner.Player2)
+                tiles2++;
+        }
+
+        if (tiles1 == 0 | tiles2 == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
