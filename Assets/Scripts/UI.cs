@@ -21,6 +21,8 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject _endGameButtons;
     [SerializeField] private GameObject _helpScreen;
     [SerializeField] private GameObject[] _headUI;
+    [SerializeField] private Transform[] _endGameFXPoints;
+    [SerializeField] private GameObject _endGameFXPrefab;
 
 
     private void Awake()
@@ -112,6 +114,11 @@ public class UI : MonoBehaviour
         else
         {
             _winnerText.text = $"YOUR SCORE: {GameManager.Instance.Player1.Score}";
+        }
+
+        for (int i = 0; i < _endGameFXPoints.Length ; i++)
+        {
+            Instantiate(_endGameFXPrefab, _endGameFXPoints[i].position, Quaternion.identity);
         }
     }
 
