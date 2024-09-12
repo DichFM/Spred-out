@@ -94,7 +94,7 @@ public class UI : MonoBehaviour
     {
         Invoke(nameof(ShowEndGameButtons), 3f);
         _endGameUI.SetActive(true);
-        if (gameMode == GameMode.Multiplyaer | gameMode == GameMode.Domination)
+        if (gameMode == GameMode.Multiplyaer | gameMode == GameMode.Сapture)
         {
             switch (winner)
             {

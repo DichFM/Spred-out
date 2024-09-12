@@ -62,7 +62,7 @@ public class TilesManager : MonoBehaviour
             }
         }
 
-        if (GameManager.Instance.GameMode == GameMode.Domination)
+        if (GameManager.Instance.GameMode == GameMode.Сapture)
         {
             for (int i = 0; i < _allTiles.Length; i++)
             {

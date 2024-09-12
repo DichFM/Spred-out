@@ -2529,6 +2529,7 @@ MonoBehaviour:
   _tilesGO: {fileID: 612751207}
   _startButton: {fileID: 1679977544}
   _buttonFxSound: {fileID: 639438796}
+  _saveLoadSettings: {fileID: 1167300311}
 --- !u!1 &599789442
 GameObject:
   m_ObjectHideFlags: 0
@@ -4526,6 +4527,87 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1167300310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167300312}
+  - component: {fileID: 1167300311}
+  m_Layer: 0
+  m_Name: Settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1167300311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167300310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd86b17793a1b542b3e7473f7b2c51e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storage: {fileID: 11400000, guid: d50304e839a681649ac9f55ddf76d812, type: 2}
+  Data:
+    options:
+    - displayTitle: Mode
+      multiSelectionEnabled: 0
+      valueType: int
+      values:
+      - id: 0
+        title: 2 Players
+        value: 1
+      - id: 1
+        title: Single Player
+        value: 2
+      - id: 2
+        title: Capture
+        value: 3
+      selected: 02000000
+    - displayTitle: Time
+      multiSelectionEnabled: 0
+      valueType: float
+      values:
+      - id: 0
+        title: 20 sec
+        value: 20
+      - id: 1
+        title: 30 sec
+        value: 30
+      - id: 2
+        title: 40 sec
+        value: 40
+      - id: 3
+        title: 50 sec
+        value: 50
+      - id: 4
+        title: 60 sec
+        value: 60
+      selected: 03000000
+--- !u!4 &1167300312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167300310}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.14745729, y: -0.13507055, z: 66.78708}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1233112147
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7899,3 +7981,4 @@ SceneRoots:
   - {fileID: 394412662}
   - {fileID: 599789443}
   - {fileID: 1660339399}
+  - {fileID: 1167300312}

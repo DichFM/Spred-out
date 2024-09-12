@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: 7b0b90d8da7cc834cb0a47ca48292caa
+    path: Assets/Scenes/SceneLoader.unity
+    guid: ee22b9843b0eed54c9f107ab42623c20
   - enabled: 1
     path: Assets/Scenes/MultiplayerMode.unity
     guid: 2cda990e2423bbf4892e6590ba056729
@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/SingleplayerMode.unity
     guid: 16498e22724a02c4c81da3cf85acd031
   - enabled: 1
-    path: Assets/Scenes/DominationMode.unity
+    path: "Assets/Scenes/\u0421aptureMode.unity"
     guid: b46a9fd49051cd54ebd6932a98829bf2
   m_configObjects: {}

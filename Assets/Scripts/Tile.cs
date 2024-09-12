@@ -96,7 +96,7 @@ public class Tile : MonoBehaviour
         {
             Instantiate(_hitFX, transform.position, quaternion.identity);
             int scoretoPopup = 1;
-            if (GameManager.Instance.GameMode == GameMode.Domination)
+            if (GameManager.Instance.GameMode == GameMode.Сapture)
             {
                 scoretoPopup = GetFreeNeighborsNumber();
             }

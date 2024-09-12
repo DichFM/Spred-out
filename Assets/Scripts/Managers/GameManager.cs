@@ -10,7 +10,7 @@ public enum GameMode
 {
     Singleplayer,
     Multiplyaer,
-    Domination
+    Сapture
 }
 
 public class GameManager : MonoBehaviour
@@ -35,9 +35,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _tilesGO;
     [SerializeField] private TapGesture _startButton;
     [SerializeField] private AudioSource _buttonFxSound;
+    [SerializeField] private SaveLoadSettings _saveLoadSettings;
     private float _timeFromLastTap;
     private float _timerFromLastWorngSound;
-    private float _roundTime = 6;
+    private float _roundTime = 40;
     private bool _timerFlag;
     private const float SoundFadeSeconds = 1.2f;
 
@@ -79,15 +80,19 @@ public class GameManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex == 3)
         {
-            GameMode = GameMode.Domination;
+            GameMode = GameMode.Сapture;
         }
-        
     }
+
     private void Start()
     {
         UI.Instance.HideHeadUI();
         StartCoroutine(FadeIn(0, _menuMusic));
+        
+        _saveLoadSettings.LoadData();
+        _roundTime = _saveLoadSettings.getDataIntById(1);
     }
+
     public IEnumerator StartGameDelay()
     {
         yield return new WaitForSeconds(1f);
@@ -152,7 +157,7 @@ public class GameManager : MonoBehaviour
         if (_isStarting)
         {
             GameTimer -= Time.deltaTime;
-            if (GameMode == GameMode.Domination)
+            if (GameMode == GameMode.Сapture)
             {
                 Player1.Score = TilesManager.Instance.GetOccupiedTilesNumber(Owner.Player1);
                 Player2.Score = TilesManager.Instance.GetOccupiedTilesNumber(Owner.Player2);
@@ -172,21 +177,19 @@ public class GameManager : MonoBehaviour
             }
 
             _timerFromLastWorngSound += Time.deltaTime;
-        }
 
+            _timeFromLastTap += Time.deltaTime;
 
-        _timeFromLastTap += Time.deltaTime;
-
-        if (GameMode == GameMode.Domination)
-        {
-            if (_timeFromLastTap > 3f)
+            if (GameMode == GameMode.Сapture)
             {
-                _timeFromLastTap = 0;
-                TilesManager.Instance.ResetRandomTiles();
+                if (_timeFromLastTap > 3f)
+                {
+                    _timeFromLastTap = 0;
+                    TilesManager.Instance.ResetRandomTiles();
+                }
             }
         }
     }
-
 
 
     private void TimeReset()
@@ -240,7 +243,7 @@ public class GameManager : MonoBehaviour
         _correctSound.Play();
 
 
-        if (GameMode == GameMode.Domination)
+        if (GameMode == GameMode.Сapture)
         {
             tile.CapturingNeighbors();
         }
